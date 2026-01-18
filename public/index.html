@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Laptop Store</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: #F7F4D5;
+      color: #0A3323;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    header {
+      background-color: #0A3323;
+      color: #F7F4D5;
+      padding: 30px;
+      border-radius: 15px;
+      margin-bottom: 30px;
+      text-align: center;
+      box-shadow: 0 10px 20px rgba(10, 51, 35, 0.2);
+    }
+
+    h1 {
+      font-size: 2.8rem;
+      margin-bottom: 10px;
+      letter-spacing: 1px;
+    }
+
+    .tagline {
+      font-size: 1.1rem;
+      opacity: 0.9;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .content-wrapper {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      margin-bottom: 40px;
+    }
+
+    @media (max-width: 900px) {
+      .content-wrapper {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .form-section, .list-section {
+      background-color: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+      border: 1px solid rgba(131, 153, 88, 0.2);
+    }
+
+    h2 {
+      color: #105666;
+      margin-bottom: 25px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #839958;
+      font-size: 1.8rem;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: #0A3323;
+    }
+
+    input {
+      width: 100%;
+      padding: 14px;
+      border: 2px solid #839958;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      background-color: #F7F4D5;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #105666;
+      box-shadow: 0 0 0 3px rgba(16, 86, 102, 0.2);
+      background-color: white;
+    }
+
+    button {
+      background-color: #105666;
+      color: white;
+      border: none;
+      padding: 16px 30px;
+      font-size: 1.1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: 600;
+      width: 100%;
+      margin-top: 10px;
+      letter-spacing: 0.5px;
+    }
+
+    button:hover {
+      background-color: #0A3323;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(10, 51, 35, 0.3);
+    }
+
+    button:active {
+      transform: translateY(0);
+    }
+
+    #laptopList {
+      list-style-type: none;
+    }
+
+    .laptop-item {
+      background-color: #F7F4D5;
+      border-left: 5px solid #839958;
+      margin-bottom: 15px;
+      padding: 20px;
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all 0.3s ease;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .laptop-item:hover {
+      transform: translateX(5px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      border-left-color: #105666;
+    }
+
+    .laptop-info {
+      flex-grow: 1;
+    }
+
+    .laptop-name {
+      font-weight: 700;
+      font-size: 1.2rem;
+      color: #0A3323;
+      margin-bottom: 5px;
+    }
+
+    .laptop-brand {
+      color: #105666;
+      font-weight: 600;
+      background-color: rgba(16, 86, 102, 0.1);
+      padding: 4px 10px;
+      border-radius: 20px;
+      display: inline-block;
+      font-size: 0.9rem;
+      margin-bottom: 10px;
+    }
+
+    .laptop-price {
+      font-weight: 700;
+      font-size: 1.3rem;
+      color: #D3968C;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 40px 20px;
+      color: #839958;
+      font-style: italic;
+    }
+
+    .store-stats {
+      display: flex;
+      justify-content: space-around;
+      background-color: #0A3323;
+      color: #F7F4D5;
+      padding: 20px;
+      border-radius: 15px;
+      margin-top: 30px;
+      box-shadow: 0 5px 15px rgba(10, 51, 35, 0.2);
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-value {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #839958;
+    }
+
+    .stat-label {
+      font-size: 0.9rem;
+      opacity: 0.8;
+      margin-top: 5px;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(131, 153, 88, 0.3);
+      color: #839958;
+      font-size: 0.9rem;
+    }
+
+    .logo {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 50px;
+      height: 50px;
+      background-color: #839958;
+      color: white;
+      border-radius: 50%;
+      font-weight: bold;
+      margin-right: 15px;
+    }
+
+    .header-content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    @media (max-width: 600px) {
+      .header-content {
+        flex-direction: column;
+        text-align: center;
+      }
+      
+      .logo {
+        margin-right: 0;
+        margin-bottom: 15px;
+      }
+      
+      h1 {
+        font-size: 2.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="header-content">
+        <div class="logo">LS</div>
+        <div>
+          <h1>Premium Laptop Store</h1>
+          <p class="tagline">Discover the perfect laptop for work, gaming, and creativity. Add your favorite models to our collection.</p>
+        </div>
+      </div>
+    </header>
+    
+    <div class="content-wrapper">
+      <section class="form-section">
+        <h2>Add New Laptop</h2>
+        <form id="laptopForm">
+          <div class="form-group">
+            <label for="name">Laptop Name</label>
+            <input type="text" id="name" placeholder="e.g., MacBook Pro 16, XPS 13, ThinkPad X1" required />
+          </div>
+          
+          <div class="form-group">
+            <label for="brand">Brand</label>
+            <input type="text" id="brand" placeholder="e.g., Apple, Dell, Lenovo, HP" required />
+          </div>
+          
+          <div class="form-group">
+            <label for="price">Price ($)</label>
+            <input type="number" id="price" placeholder="e.g., 1299" min="0" step="0.01" required />
+          </div>
+          
+          <button type="submit">Add Laptop to Collection</button>
+        </form>
+      </section>
+      
+      <section class="list-section">
+        <h2>Laptop Collection</h2>
+        <ul id="laptopList">
+          <!-- Laptops will be loaded here -->
+          <div class="empty-state">No laptops in collection yet. Add one above!</div>
+        </ul>
+      </section>
+    </div>
+    
+    <div class="store-stats">
+      <div class="stat-item">
+        <div class="stat-value" id="totalLaptops">0</div>
+        <div class="stat-label">Total Laptops</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value" id="avgPrice">$0</div>
+        <div class="stat-label">Average Price</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value" id="totalValue">$0</div>
+        <div class="stat-label">Collection Value</div>
+      </div>
+    </div>
+    
+    <footer>
+      <p>© 2026 Premium Laptop Store | All prices in USD | Backend Assignment | Ulnaz Seitzhan</p>
+    </footer>
+  </div>
+
+  <script>
+    const API_URL = "/laptops";
+
+    async function loadLaptops() {
+      try {
+        const res = await fetch(API_URL);
+        const laptops = await res.json();
+
+        const list = document.getElementById("laptopList");
+        list.innerHTML = "";
+
+        if (laptops.length === 0) {
+          list.innerHTML = '<div class="empty-state">No laptops in collection yet. Add one above!</div>';
+          updateStats([]);
+          return;
+        }
+
+        laptops.forEach(l => {
+          const li = document.createElement("li");
+          li.className = "laptop-item";
+          li.innerHTML = `
+            <div class="laptop-info">
+              <div class="laptop-name">${l.name}</div>
+              <div class="laptop-brand">${l.brand}</div>
+            </div>
+            <div class="laptop-price">$${l.price.toLocaleString()}</div>
+          `;
+          list.appendChild(li);
+        });
+
+        updateStats(laptops);
+      } catch (error) {
+        console.error("Error loading laptops:", error);
+        const list = document.getElementById("laptopList");
+        list.innerHTML = '<div class="empty-state" style="color: #D3968C;">Error loading laptops. Please try again.</div>';
+      }
+    }
+
+    function updateStats(laptops) {
+      const totalLaptops = laptops.length;
+      const totalValue = laptops.reduce((sum, laptop) => sum + laptop.price, 0);
+      const avgPrice = totalLaptops > 0 ? totalValue / totalLaptops : 0;
+      
+      document.getElementById("totalLaptops").textContent = totalLaptops;
+      document.getElementById("avgPrice").textContent = `$${avgPrice.toFixed(2)}`;
+      document.getElementById("totalValue").textContent = `$${totalValue.toLocaleString()}`;
+    }
+
+    document.getElementById("laptopForm").addEventListener("submit", async e => {
+      e.preventDefault();
+
+      const name = document.getElementById("name");
+      const brand = document.getElementById("brand");
+      const price = document.getElementById("price");
+
+      // Show loading state on button
+      const button = e.target.querySelector("button");
+      const originalText = button.textContent;
+      button.textContent = "Adding...";
+      button.disabled = true;
+
+      try {
+        await fetch(API_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: name.value,
+            brand: brand.value,
+            price: parseFloat(price.value)
+          })
+        });
+
+        e.target.reset();
+        await loadLaptops();
+        
+        // Show success message
+        button.textContent = "✓ Added!";
+        button.style.backgroundColor = "#839958";
+        setTimeout(() => {
+          button.textContent = originalText;
+          button.disabled = false;
+          button.style.backgroundColor = "";
+        }, 1500);
+      } catch (error) {
+        console.error("Error adding laptop:", error);
+        button.textContent = "✗ Error";
+        button.style.backgroundColor = "#D3968C";
+        setTimeout(() => {
+          button.textContent = originalText;
+          button.disabled = false;
+          button.style.backgroundColor = "";
+        }, 1500);
+      }
+    });
+
+    // Load laptops when page loads
+    loadLaptops();
+  </script>
+</body>
+</html>
